@@ -2,7 +2,7 @@
 #include <string>
 using namespace std;
 
-typedef string Data;
+typedef float Data;
 const int MAX = 4; 
 
 struct Node
@@ -83,11 +83,7 @@ class linkedlist{
         cur->next=newnode;
         size++;
     }
-    void deletehead(Data data){
-        if (size >= MAX) {
-            cout << "Antrian penuh (max " << MAX << ")!" << endl;
-            return;
-        }
+    void deletehead(){
         if (head == nullptr) {
             cout << "kosong" << endl;
             return;
@@ -100,7 +96,7 @@ class linkedlist{
         delete cur;
         size--;
     }
-    void deletetail(Data data){
+    void deletetail(){
         if(head == nullptr){
             cout << "kosong" << endl;
         }
@@ -120,7 +116,7 @@ class linkedlist{
         size--;
 
     }
-    void deleteafter(Data data, Data value){
+    void deleteafter(Data value){
         Node* cur = head;
         while(cur != nullptr && cur->data != value){
         cur = cur->next;
@@ -141,7 +137,7 @@ class linkedlist{
         Node* cur = head;
         cout << "Antrian : ";
         while (cur != nullptr) {
-            cout << cur->data << " <-> ";
+            cout << cur->data << "("<< cur << ")" << " <-> ";
             cur = cur->next;
         }
         cout << "NULL" << endl;
@@ -150,18 +146,64 @@ class linkedlist{
 };
 
 int main() {
-    linkedlist list; 
+    linkedlist list;
+    int pilihan;
+    Data data, target;
 
-    list.inserthead("C");
-    list.inserthead("B");
-    list.inserthead("A");
-    list.display();
+    do {
+        cout << "\n=== MENU ===\n";
+        cout << "1. Insert Head\n";
+        cout << "2. Insert Tail\n";
+        cout << "3. Insert After\n";
+        cout << "4. Delete Head\n";
+        cout << "5. Delete Tail\n";
+        cout << "6. Delete After\n";
+        cout << "7. Tampilkan Antrian\n";
+        cout << "0. Keluar\n";
+        cout << "Pilih menu: ";
+        cin >> pilihan;
 
-    list.insertafter("D", "A");
-    list.display();
+        switch (pilihan) {
+        case 1:
+            cout << "Masukkan data: ";
+            cin >> data;
+            list.inserthead(data);
+            break;
+        case 2:
+            cout << "Masukkan data: ";
+            cin >> data;
+            list.inserttail(data);
+            break;
+        case 3:
+            cout << "Masukkan data baru: ";
+            cin >> data;
+            cout << "Setelah data: ";
+            cin >> target;
+            list.insertafter(data, target);
+            break;
+        case 4:
+        
+            list.deletehead();
+            break;
+        case 5:
+            list.deletetail();
+            break;
+        case 6:
+            cout << "Hapus setelah data: ";
+            cin >> target;
+            list.deleteafter(target);
+            break;
+        case 7:
+            list.display();
+            break;
+        case 0:
+            cout << "Program selesai.\n";
+            break;
+        default:
+            cout << "Pilihan tidak valid!" << endl;
+        }
 
-    list.deletehead("A");
-    list.display();
+    } while (pilihan != 0);
 
     return 0;
 }
